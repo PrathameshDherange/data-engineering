@@ -1,0 +1,14 @@
+conda env create -f environment.yml
+conda activate snowflake-demo
+
+--create view
+python 04_create_pos_views.py
+
+--create fun procedure
+cd
+python fahrenheit_to_celsius_udf/function.py 35
+python orders_update_sp/procedure.py
+snow snowpark build
+snow snowpark deploy
+snow snowpark execute function "fahrenheit_to_celsius_udf(35)"
+snow snowpark execute procedure "harmonized.orders_update_sp()"
